@@ -35,3 +35,15 @@ exports.createUser = (req, res) => {
         res.status(500).json(err)
     )
 }
+
+exports.deleteUser = (req, res) => {
+    const query = req.query
+
+    const data = (req.body.email === undefined) ? 
+        err => res.status(400).json(err)
+     : 
+        Users.apiQuery(query).remove(req).then( user =>
+            res.status(201).json(user)
+        )
+     
+}
