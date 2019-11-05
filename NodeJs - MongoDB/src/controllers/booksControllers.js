@@ -7,7 +7,7 @@ exports.saveBook = (req, res) => {
     book.publishDate = new Date()
     book.save(function(err) { // Save book
         console.log(err)
-        res.status(201).send(JSON.stringify(req.body))
+        res.status(201).json(req.body)
     })
 }
 
@@ -17,6 +17,6 @@ exports.listBooks = (req, res) => {
     } : {}
 
     Books.find(data, function(err, books) {
-        res.status(200).send(JSON.stringify(books))
+        res.status(200).json(books)
     })
 }
