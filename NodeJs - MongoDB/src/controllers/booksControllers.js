@@ -20,3 +20,24 @@ exports.listBooks = (req, res) => {
         res.status(200).json(books)
     })
 }
+
+
+
+ /////A COMPLETER ET A MODIFIER//////
+
+
+
+
+
+
+ /////UPDATE//////
+exports.updateBook = (req, res) => {
+    const query = (req.params._id !== undefined) ? {
+        title: req.params.title
+    } : { "_id": "5dc018e67cefb630b40b5a90" }
+
+    Books.findOneAndUpdate(query, 
+        { title: 'nom bien changé HIHIHIHIH' })
+
+        res.send("oh")
+}
