@@ -47,7 +47,14 @@ let BookSchema = new mongoose.Schema({
             type: String,
             required: true,
         },
-    }]
+    }],
+    visite:{
+        nb:Number,
+        liste:[{
+            email:String,
+            time: Date
+        }]
+    }
 })
 
 BookSchema.pre('save', function(next) {

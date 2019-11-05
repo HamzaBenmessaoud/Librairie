@@ -38,7 +38,11 @@ let UserSchema = new mongoose.Schema({
             require: true,
             default: 'auth'
         }
-    }]
+    }],
+    admin:{
+        type: Boolean,
+        default: false
+    }
 })
 
 UserSchema.pre('save', (next) => {
