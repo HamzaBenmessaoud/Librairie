@@ -6,5 +6,6 @@ route.get('/books', Books.listBooks)
 route.get('/book/:title', Books.listBooks)
 route.post('/book/:id', Books.updateBook)
 route.post('/book', Books.saveBook)
+route.delete('/book/:id', Books.deleteBook)
 
 module.exports = route
