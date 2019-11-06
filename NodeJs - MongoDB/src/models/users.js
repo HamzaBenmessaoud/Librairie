@@ -42,6 +42,10 @@ let UserSchema = new mongoose.Schema({
     admin:{
         type: Boolean,
         default: false
+    },
+    actif:{
+        type:Boolean,
+        default: true
     }
 })
 
