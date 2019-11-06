@@ -26,7 +26,7 @@ let UserSchema = new mongoose.Schema({
         type: String,
         trim: true,
         require: true,
-        default: 'https://pbs.twimg.com/profile_images/481525828044353536/c3runNqA.jpeg'
+        default: 'https://picsum.photos/id/'+ Math.floor(Math.random()*1000)+'/200/300'
     },
     tokens: [{
         token: {
