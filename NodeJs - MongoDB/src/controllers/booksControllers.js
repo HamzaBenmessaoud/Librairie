@@ -43,3 +43,33 @@ exports.updateBook = (req, res) => {
   
 
 }
+
+//// RATING /////
+
+
+
+
+exports.createRating = (req, res) => {
+    const query = req.body
+    console.log(query)
+    const data = {
+        rate: req.body.rate,
+        comment:  req.body.comment,
+        userId: "A RECUPERER",
+        publishDate: new Date()
+    }
+
+    Books.findOneAndUpdate(req.body._id,{"$push" : {rating : data}}).then((doc)=>{
+        (doc != null)?res.send("done"):res.send("not found") 
+        })
+
+}
+
+
+
+
+
+
+//// Link /////
+
+
