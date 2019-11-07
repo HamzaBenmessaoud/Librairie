@@ -26,20 +26,21 @@ exports.updateBook = (req, res) => {
     const query = (req.params._id !== undefined) ? 
         req.params._id
     : "5dc018e67cefb630b40b5a90"
-    Books.findByIdAndUpdate(query, 
-        { title: 'nom bien changé HIHIHIHIH' })
-        res.send("REUSSI")
-        console.log(res)
+    console.log('/////////////'+query)
+
+
+        Books.findOneAndUpdate(query,{title:"nom bien changé HIHIHIHIH"}).then((doc)=>{
+            (doc != null)?res.send("done"):res.send("not found") 
+            })
 }
 /////DELETE////
   exports.deleteBook = (req, res) => {
     const query = (req.params._id !== undefined) ?  req.params._id
      : "5dc196d704e2355470fc5735" 
-    Books.findByIdAndDelete(query,(err,res)=>{
-        console.log(err)
-        
+    Books.findByIdAndDelete(query).then((doc)=>{
+        (doc != null)?res.send("done"):res.send("not found") 
     })
-    res.send("OK")
+  
 
 }
 
