@@ -27,20 +27,59 @@ exports.createUser = (req, res) => {
             expiresIn: '72h'
         })
     }]
-
-    Users.create(data).then(user =>
-        res.status(201).json(user)
-    ).catch(
-        err =>
-        res.status(500).json(err)
-    )
+    const a = Users.findOne(data.email).then((doc)=>{
+        (doc != null)?true:false 
+        })
+    if(a){
+        Users.create(data).then(user =>
+            res.status(201).json(user)
+        ).catch(
+            err => res.status(500).json(err)
+        )
+    } else {
+        res.send("email already use")
+    }
 }
 
 exports.deleteUser = (req, res) => {
     const query = req.body
-    console.log(query)
-Users.findOneAndUpdate(query,{actif:false}).then((doc)=>{
-    (doc != null)?res.send("done"):res.send("not found") 
+    Users.findOneAndUpdate(query,{actif:false}).then((doc)=>{
+        (doc != null)?res.send("done"):res.send("user not found") 
     })
+}
 
+
+exports.updateUserEmail = (req, res) => {
+    const query = req.body._id       
+    Users.findByIdAndUpdate(query,{email:req.body.email}).then((doc)=>{
+        (doc != null)?res.send("done"):res.send("user not found") 
+    })
+}
+
+exports.updateUserPassword = (req, res) => {
+    const query = req.body._id       
+    Users.findByIdAndUpdate(query,{password:_password}).then((doc)=>{
+        (doc != null)?res.send("done"):res.send("user not found") 
+    })
+}
+
+exports.updateUserName = (req, res) => {
+    const query = req.body._id       
+    Users.findByIdAndUpdate(query,{name:req.body.name}).then((doc)=>{
+        (doc != null)?res.send("done"):res.send("user not found") 
+    })
+}
+
+exports.updateUserAvatar = (req, res) => {
+    const query = req.body._id       
+    Users.findByIdAndUpdate(query,{avatar:req.body.avatar}).then((doc)=>{
+        (doc != null)?res.send("done"):res.send("user not found") 
+        })
+}
+
+exports.updateUserAdmin = (req, res) => {
+    const query = req.body._id       
+    Users.findByIdAndUpdate(query,{admin:req.body.admin}).then((doc)=>{
+        (doc != null)?res.send("done"):res.send("user not found") 
+    })
 }

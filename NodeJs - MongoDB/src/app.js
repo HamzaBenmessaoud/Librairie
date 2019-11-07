@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({
     extended: false
 }))
 
-app.use('/user', require('./routes/user'))
+app.use('/', require('./routes/user'))
 app.use('/', require('./routes/book'))
 
 app.listen(env.port, function() {
