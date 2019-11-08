@@ -9,5 +9,6 @@ route.post('/user/update/password', Users.updateUserPassword)
 route.post('/user/update/name', Users.updateUserName)
 route.post('/user/update/avatar', Users.updateUserAvatar)
 route.post('/user/update/admin', Users.updateUserAdmin)
+route.post('/user/login', Users.loginUser)
 
 module.exports = route
