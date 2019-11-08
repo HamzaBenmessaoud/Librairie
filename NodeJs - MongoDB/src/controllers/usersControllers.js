@@ -1,6 +1,8 @@
 const Users = require('../models/users'),
     env = require('../environnement'),
-    jwt = require('jsonwebtoken')
+    jwt = require('jsonwebtoken'),
+    bcrypt = require('bcryptjs'),
+    Sessions = require('../models/sessions')
 
 exports.listUser = (req, res) => {
     const query = req.query
@@ -87,18 +89,20 @@ exports.updateUserAdmin = (req, res) => {
 
 exports.loginUser = (req, res) => {
 
-	Users.get({
+	Users.findOne({
 		email: req.body.email
 	}).then(function (user) {
-        if (req.body.password == user.password) {
+
+        if (bcrypt.compare(req.body.password,user.password)==false) {
+            
             res.send("invalid password")
         }
-
-        const token = jwt.sign({email: user.email}, { expiresIn: '72h' });        
+        const token = jwt.sign({email: user.email},env.jwt, { expiresIn: '1h' });
         res.header('Authorization', token);
-        Session.create({
+        Sessions.create({
 			emailUser: user.email,
 			token: token,
-		});
+        });
+        res.send('OK')
 	})
 };
