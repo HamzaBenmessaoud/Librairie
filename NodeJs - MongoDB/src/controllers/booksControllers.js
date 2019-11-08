@@ -50,26 +50,121 @@ exports.updateBook = (req, res) => {
 
 
 exports.createRating = (req, res) => {
-    const query = req.body
-    console.log(query)
     const data = {
         rate: req.body.rate,
         comment:  req.body.comment,
         userId: "A RECUPERER",
         publishDate: new Date()
     }
-
     Books.findOneAndUpdate(req.body._id,{"$push" : {rating : data}}).then((doc)=>{
         (doc != null)?res.send("done"):res.send("not found") 
         })
+}
 
+exports.modifyRating = (req, res) => {
+    var tab=[]
+    Books.findById(req.body._id).then((doc)=>
+    {   
+        tab=doc['rating']
+        for (let i = 0; i < tab.length; i++) {
+            if (req.body.idrat==tab[i]['_id']) {
+                tab[i]['rate'] = (req.body.rate !== undefined )?req.body.rate : tab[i]['rate'];
+                tab[i]['comment'] = (req.body.comment !== undefined )?req.body.comment : tab[i]['comment'];
+                tab[i]['userId'] = (req.body.userId !== undefined )?req.body.userId : tab[i]['userId'];
+                tab[i]['publishDate'] = (req.body.publishDate !== undefined )?req.body.publishDate : tab[i]['publishDate'];   
+            }
+        }
+        Books.findOneAndUpdate(req.body._id,{"$set" : {rating : tab}}).then((d)=>
+        {
+            (d != null)?res.send(d):res.send(d) 
+        });  
+    });
+}
+exports.deleteRating = (req, res) => {
+
+    var tab=[]
+    Books.findById(req.body._id).then((doc)=>
+    {   
+        doc['rating'].forEach(i=> {
+            if (req.body.idrat!=i['_id']) {
+                tab.push(i)
+            }
+        });
+ 
+        Books.findOneAndUpdate(req.body._id,{"$set" : {rating : tab}}).then((d)=>
+        {
+            (d != null)?res.send(d):res.send(d) 
+        });  
+    });
 }
 
 
 
 
-
-
 //// Link /////
+exports.addLink = (req, res) => { 
+    var b= true;
+    data = {
+        name: (req.body.name !== undefined )?req.body.name : "Amazon",
+        link: (req.body.link !== undefined )?req.body.link : "www.amazon.com",
+    };
+    Books.findById(req.body._id).select("links").then((doc)=>
+        {   
+        doc['links'].forEach(i => {
+            b= (data.name==i.name&&data.link==i.link)? false: b;
+        });
+
+           b==false ? res.send("////LIEN EXISTANT/////"): Books.findOneAndUpdate(req.body._id,
+                {"$push" : {links : data}}).then((doc)=>{(doc != null)?res.send("done"):res.send("not found") 
+        });  
+    });
+    
+}
+exports.modifyLink = (req, res) => {
+    var tab=[]
+    Books.findById(req.body._id).then((doc)=>
+    {   
+        tab=doc['links']
+
+        for (let i = 0; i < tab.length; i++) {
+  
+            if (req.body.idLink==tab[i]['_id']) {
+                tab[i]['name'] = (req.body.name !== undefined )?req.body.name : tab[i]['name'];
+                tab[i]['link'] = (req.body.link !== undefined )?req.body.link : tab[i]['link'];
+            
+            }
+        }
+
+          
+                
+  
+        Books.findOneAndUpdate(req.body._id,{"$set" : {links : tab}}).then((d)=>
+        {
+            (d != null)?res.send(d):res.send(d) 
+        });  
+    });
+}
+
+
+exports.deleteLink = (req, res) => {
+    var tab=[]
+    Books.findById(req.body._id).then((doc)=>
+    {   
+        
+
+        doc['links'].forEach(i => {
+            if (req.body.idLink!=i['_id']) {
+                tab.push(i)
+            }
+        });
+   
+        Books.findOneAndUpdate(req.body._id,{"$set" : {links : tab}}).then((d)=>
+        {
+            (d != null)?res.send(d):res.send(d) 
+        });  
+    });
+}
+
+
 
 
