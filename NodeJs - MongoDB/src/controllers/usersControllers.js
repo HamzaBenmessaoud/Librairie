@@ -83,3 +83,22 @@ exports.updateUserAdmin = (req, res) => {
         (doc != null)?res.send("done"):res.send("user not found") 
     })
 }
+
+
+exports.loginUser = (req, res) => {
+
+	Users.get({
+		email: req.body.email
+	}).then(function (user) {
+        if (req.body.password == user.password) {
+            res.send("invalid password")
+        }
+
+        const token = jwt.sign({email: user.email}, { expiresIn: '72h' });        
+        res.header('Authorization', token);
+        Session.create({
+			emailUser: user.email,
+			token: token,
+		});
+	})
+};
