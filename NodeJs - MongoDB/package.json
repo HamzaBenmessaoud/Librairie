@@ -4,7 +4,7 @@
     "description": "",
     "main": "app.js",
     "scripts": {
-        "start": "pm2 stop all && pm2 start src/app.js --watch  && pm2 logs",
+        "start": "pm2 stop all && pm2 start app.js --watch  && pm2 logs",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "heroku-postbuild": "npm i -g pm2",
