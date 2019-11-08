@@ -7,6 +7,12 @@
         "start": "pm2 stop all && pm2 start src/app.js --watch  && pm2 logs",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
+    "heroku-postbuild": "npm i -g pm2",
+    "engines": {
+        "node": "12.13.0",
+        "npm": "6.x",
+        "yarn": "1.x"
+    },
     "author": "Mike Christopher SYLVESTRE I",
     "license": "ISC",
     "dependencies": {
